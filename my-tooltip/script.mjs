@@ -5,21 +5,23 @@ class Tooltip extends HTMLElement {
     super();
 
     this.setStyles({
-      position: "absolute",
+      display: "none", //to hide the tooltip on initial render
+      position: "fixed",
       padding: "5px",
       backgroundColor: "black",
       color: "white",
+      zIndex: "9999",
     });
   }
 
   connectedCallback() {
     this.#target = document.querySelector(`[aria-describedby=${this.id}]`);
     this.setPosition();
-    this.#target.addEventListener("mouseover", () => this.show());
+    this.#target.addEventListener("mouseover", () => {
+      this.show();
+      this.setPosition();
+    });
     this.#target.addEventListener("mouseout", () => this.hide());
-
-    //hide the tooltip initially
-    this.hide();
   }
 
   setStyles(styles) {
@@ -37,10 +39,12 @@ class Tooltip extends HTMLElement {
   }
 
   setPosition() {
-    const { top } = this.#target.getBoundingClientRect();
+    const { top, left, width } = this.#target.getBoundingClientRect();
 
     // - 5 for little extra space between the element and tooltip
-    this.style.top = top - this.offsetHeight - 5 + "px";
+    this.style.top = `${top - this.offsetHeight - 5}px`;
+    this.style.left = `${left + (width - this.offsetWidth) / 2}px`;
+    console.log(this.#target, left);
   }
 }
 

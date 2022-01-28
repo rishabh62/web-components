@@ -10,7 +10,15 @@
     <main>
       <section>
         <my-tooltip id="button-tooltip">this is a button</my-tooltip>
-        <button aria-describedby="button-tooltip">hover over me</button>
+        <button type="button" aria-describedby="button-tooltip">
+          hover over me
+        </button>
+
+        <my-tooltip id="div-tooltip">this is a div</my-tooltip>
+        <div
+          aria-describedby="div-tooltip"
+          style="background-color: red; width: 100px; height: 100px"
+        ></div>
       </section>
     </main>
   </body>
